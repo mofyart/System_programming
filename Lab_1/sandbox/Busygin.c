@@ -1,7 +1,9 @@
 #include <stdio.h>
 
 int main() {
-    puts("Busygin Artem Dmitrievich");
+    printf("Busygin\n");
+    printf("Artem\n");
+    printf("Dmitrievich\n");
 
     return 0;
 }

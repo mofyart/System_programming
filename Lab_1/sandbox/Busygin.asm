@@ -1,26 +1,22 @@
-format ELF64 executable 3
-entry start
+format ELF
+public _start
 
-segment readable executable
 
-start:
-    ; System call write
-    mov rax, 1          ; syscall number for write
-    mov rdi, 1          ; file descriptor (stdout)
-    mov rsi, msg        ; pointer to message
-    mov rdx, msg_len    ; message length
-    syscall
+msg:
+ db "Busygin", 10
+ db "Artem", 10
+ db "Dmitrievich", 10
+msgEnd:
 
-    ; System call exit
-    mov rax, 60         ; syscall number for exit
-    xor rdi, rdi        ; exit code 0
-    syscall
+_start:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, msg_len
+    int 0x80
 
-segment readable writeable
+    mov eax, 1
+    mov ebx, 0
+    int 0x80
 
-msg db 'Busygin Artem Dmitrievich', 0xA
-msg_len = $ - msg
-
-; fasm name.arm name ; compilation
-; chmod +x ./Galesssio ; change mode for file to make it exe.
-; ./name ; call
+msg_len = msgEnd - msg
