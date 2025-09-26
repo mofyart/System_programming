@@ -1,7 +1,6 @@
 format ELF
 public _start
 
-
 msg:
  db "Busygin", 10
  db "Artem", 10
