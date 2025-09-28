@@ -2,7 +2,7 @@ format ELF
 public _start
 public exit
 
-section '.bss' writable
+section '.data' writable
 sym db '+'
 M dd 4
 K dd 7

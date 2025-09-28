@@ -1,7 +1,7 @@
 format ELF
 public _start
 
-section '.bss'  writeable
+section '.data'  writeable
     N       dd 568093600
     res     dd 0
     newline db 10

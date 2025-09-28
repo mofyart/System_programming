@@ -2,7 +2,7 @@ format ELF
 public _start
 public exit
 
-section '.bss' writeable
+section '.data' writeable
 my db 0xA, "dCvNLCHIwRBfHrlibTfnOuAfqXhQskBnlVMtoFF"
 newline db 10, 0
 
