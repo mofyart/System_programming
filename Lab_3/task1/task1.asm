@@ -11,7 +11,7 @@ _start:
     add esp, 8
     pop esi
     xor eax, eax
-    mov byte al, [esi]
+    mov al, byte [esi]
 
     call print
 

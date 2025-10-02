@@ -9,7 +9,6 @@ section '.data' writeable
     b       dd 0
     c       dd 0
 
-
 section '.text' executable
 _start:
     pop ecx
@@ -46,10 +45,6 @@ _start:
 
     call exit
 stoi:
-    push ebx
-    push ecx
-    push edx
-
     xor eax, eax
     xor ecx, ecx
     xor edx, edx
@@ -59,19 +54,19 @@ stoi:
         test cl, cl
         jz .exit
 
-        cmp cl, '0'           ; Убеждаемся, что символ - цифра
-        jb .exit              ; Если меньше '0', выходим
+        cmp cl, '0'
+        jb .exit
         cmp cl, '9'
-        ja .exit              ; Если больше '9', выходим
+        ja .exit
 
-        sub cl, '0'          ; Преобразуем символ в число
+        sub cl, '0'
 
         mov ebx, 10
-        mul ebx               ; Умножаем eax на 10 (результат в edx:eax)
+        mul ebx
 
-        add eax, ecx          ; Добавляем значение новой цифры
+        add eax, ecx
 
-        inc esi               ; Переходим к следующему символу
+        inc esi
         jmp .loop
 
     .exit:

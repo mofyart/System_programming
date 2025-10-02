@@ -4,7 +4,7 @@ public exit
 
 section '.data' writeable
 my db 0xA, "dCvNLCHIwRBfHrlibTfnOuAfqXhQskBnlVMtoFF"
-newline db 10, 0
+newline db 10
 
 section '.text' executable
 _start:
