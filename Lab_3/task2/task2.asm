@@ -45,6 +45,10 @@ _start:
 
     call exit
 stoi:
+    push ebx
+    push ecx
+    push edx
+
     xor eax, eax
     xor ecx, ecx
     xor edx, edx
