@@ -2,7 +2,7 @@ format ELF
 public _start
 public exit
 
-section '.data' writeable
+section '.bss' writeable
 my db 0xA, "dCvNLCHIwRBfHrlibTfnOuAfqXhQskBnlVMtoFF"
 newline db 10
 
@@ -13,7 +13,6 @@ _start:
     .iter:
         mov eax, 4
         mov ebx, 1
-
         mov edx, 1
         int 0x80
 
