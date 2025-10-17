@@ -1,0 +1,6 @@
+total 12
+-rw-r--r-- 2 adduser adduser 26 Oct 17 08:37 Task_1
+-rw-r--r-- 2 adduser adduser 26 Oct 17 08:37 Task_1_hardlink
+-rw-r--r-- 1 adduser adduser 29 Oct 17 08:36 Task_2
+lrwxrwxrwx 1 adduser adduser  6 Oct 17 08:35 Task_2_symlink -> Task_2
+-rw-r--r-- 1 adduser adduser  0 Oct 17 08:37 Task_3

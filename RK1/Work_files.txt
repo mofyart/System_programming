@@ -1,0 +1,13 @@
+# Создаем файл Work_files и записываем все команды
+
+#1  mkdir sandbox
+
+#2 cd sandbox
+
+#3 toch Task_1  tocuh Task_2 tocuh Task_3
+
+#4 ln Task_1 Task_1_hardlink
+
+#5 ln -s Task_2 Task_2_symlink
+
+#6  ls -l > Task_3
