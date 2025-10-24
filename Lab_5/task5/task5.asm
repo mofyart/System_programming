@@ -2,6 +2,8 @@ format ELF64
 public _start
 public exit
 
+public tester
+
 section '.data' writeable
     k       dq 0
     m       dq 0
@@ -10,7 +12,13 @@ section '.data' writeable
     file_size dq 0
     file_ptr  dq 0
 
+    t_test:
+     db "test"
+    t_testEnd:
+        t_testLen equ t_testEnd - t_test
+
 section '.text' executable
+
 _start:
     cmp qword [rsp], 5
     jne exit_error
@@ -69,10 +77,14 @@ _start:
     add rsi, rbx
     mov rdx, 1
     syscall
+
 .skip_first:
 
-    mov rcx, 1
+    push 0
+    mov rcx, 0
 .swing_loop:
+    pop rcx
+    inc rcx
     cmp rcx, [m]
     jg .loop_end
 
@@ -80,7 +92,7 @@ _start:
     add rbx, rcx
     cmp rbx, [file_size]
     jge .skip_plus
-
+    push rcx
     mov rax, 1
     mov rdi, [out_fd]
     mov rsi, [file_ptr]
@@ -88,11 +100,12 @@ _start:
     mov rdx, 1
     syscall
 .skip_plus:
-
+    pop rcx
     mov rbx, [k]
     sub rbx, rcx
-    js .skip_minus
-
+    cmp rbx, 0
+    jl .skip_minus
+    push rcx
     mov rax, 1
     mov rdi, [out_fd]
     mov rsi, [file_ptr]
@@ -101,7 +114,6 @@ _start:
     syscall
 .skip_minus:
 
-    inc rcx
     jmp .swing_loop
 
 .loop_end:
@@ -158,3 +170,13 @@ exit:
     mov rax, 60
     xor rdi, rdi
     syscall
+
+
+tester:
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, t_test
+    mov rdx, t_testLen
+    syscall
+
+    jmp exit
