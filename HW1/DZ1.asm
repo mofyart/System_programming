@@ -16,6 +16,7 @@ section '.data' writeable
     q_size dq 0
     q_cap dq 0
     newline db 10
+    place db 1
 
 ; === Основной код ===
 section '.text' executable
@@ -50,7 +51,7 @@ queue_push:
 
     mov rbx, [q_tail]
     mov rcx, [q_data]
-    mov [rcx + rbx*8], rdi
+    mov [rcx + rbx * 8], rdi
     inc rbx
     mov rdx, [q_cap]
     cmp rbx, rdx
@@ -74,7 +75,7 @@ queue_pop:
 
     mov rbx, [q_head]
     mov rcx, [q_data]
-    mov rdx, [rcx + rbx*8]
+    mov rdx, [rcx + rbx * 8]
     inc rbx
     mov rsi, [q_cap]
     cmp rbx, rsi
@@ -111,7 +112,6 @@ queue_fill_random:
         mov rdi, rdx
         call queue_push
 
-
         pop r8
         pop rcx
 
@@ -146,7 +146,6 @@ queue_print_odds:
         mov rdi, rax
         call print_int
         call print_newline
-
 
         pop rsi
         pop rdx
@@ -215,45 +214,61 @@ queue_count_end1:
 
 
 print_int:
+    push rax
     push rbx
-    push rbp
-    mov rbp, rsp
-    sub rsp, 32
+    push rcx
+    push rdx
+    push rsi
+    push rdi
 
-    mov rcx, 10
     mov rax, rdi
-    lea rbx, [rsp+31]
-    mov byte [rbx], 0
+    xor rbx, rbx
+
     cmp rax, 0
     jge .positive
 
     neg rax
-    mov bl, '-'
-    dec rbx
-    mov [rbx], bl
+    mov byte [place], '-'
+    mov rax, 1
+    mov rdi, 1
+    lea rsi, [place]
+    mov rdx, 1
+    syscall
 
     .positive:
-        mov r9, rbx
-    .pi_1:
+        mov rcx, 10
+
+    .loop:
         xor rdx, rdx
         div rcx
-        add dl, '0'
-        dec rbx
-        mov [rbx], dl
+        push rdx
+        inc rbx
         test rax, rax
-        jnz .pi_1
+        jnz .loop
 
+    .print_loop:
+        pop rax
+        add al, '0'
+        mov [place], al
+
+        push rbx
 
         mov rax, 1
         mov rdi, 1
-        mov rsi, rbx
-        mov rdx, r9
-        sub rdx, rbx
+        lea rsi, [place]
+        mov rdx, 1
         syscall
 
-        mov rsp, rbp
-        pop rbp
         pop rbx
+        dec rbx
+        jnz .print_loop
+
+        pop rdi
+        pop rsi
+        pop rdx
+        pop rcx
+        pop rbx
+        pop rax
         ret
 
 ; --- печать перевода строки ---
