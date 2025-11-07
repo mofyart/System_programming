@@ -212,7 +212,6 @@ queue_count_end1:
 
 ; ============ СЛУЖЕБНЫЕ ---------
 
-
 print_int:
     push rax
     push rbx
