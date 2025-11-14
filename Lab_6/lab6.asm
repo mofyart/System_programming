@@ -31,7 +31,7 @@ section '.bss' writable
     yMax dq 1
     char dq 1
     delay dq 10000
-    currentPalette dq 1
+    newColor dq 1
 
 
     direction dq 1
@@ -71,7 +71,7 @@ _start:
 
     mov rax, ' '
     mov [char], rax
-    mov qword [currentPalette], 1
+    mov qword [newColor], 1
 printBegin:
     mov qword [x], 0
     mov qword [y], 0
@@ -94,7 +94,7 @@ mainLoop:
     mov rsi, [x]
     call move
 
-    mov rdi, [currentPalette]
+    mov rdi, [newColor]
     shl rdi, 8
     call attron
 
@@ -114,7 +114,7 @@ mainLoop:
     cmp rax, 'v'
     je return
     cmp rax, 'b'
-    je toggleSpeed
+    je updateSpeed
 
 
     mov r10, [direction]
@@ -124,7 +124,6 @@ mainLoop:
     mov r14, [bottom_b]
     mov r8, [x]
     mov r9, [y]
-
 
 
     cmp r12, r13        ; if (left_b > right_b)
@@ -187,12 +186,12 @@ mainLoop:
     jmp mainLoop
 
 .restartSpiral:
-    mov rdi, qword [currentPalette]
+    mov rdi, qword [newColor]
     xor rdi, 3
-    mov qword [currentPalette], rdi
+    mov qword [newColor], rdi
     jmp printBegin
 
-toggleSpeed:
+updateSpeed:
     cmp qword [delay], 10000
     jne setSlow
     mov qword [delay], 3000
