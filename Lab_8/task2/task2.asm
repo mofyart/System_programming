@@ -134,7 +134,7 @@ calc_analytic:
     ret
 
 
-; Вычисление ряда: x + x^5/5 + x^9/9 ...
+; Вычисление ряда
 calc_series:
     push rbp
     mov rbp, rsp
