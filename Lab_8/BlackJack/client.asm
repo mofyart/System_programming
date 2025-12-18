@@ -59,14 +59,14 @@ loop_game:
     mov rdi, 1
     syscall
 
-    Читаем ввод с клавиатуры
+    ; Читаем ввод с клавиатуры
     mov rax, SYS_READ
-    mov rdi, 0          ; stdin
+    mov rdi, 0
     mov rsi, input_char
-    mov rdx, 2          ; символ + энтер
+    mov rdx, 2
     syscall
 
-    ; 3. Отправляем на сервер только первый байт
+    ; Отправляем на сервер только первый байт
     mov rax, SYS_WRITE
     mov rdi, [sockfd]
     mov rsi, input_char
